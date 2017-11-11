@@ -20,7 +20,7 @@ from readGPSweb import GPSvis_alt
 for i, x in enumerate(v_bat):
     seg.append(i)                               # el arreglo seg lleva el conteo de segundos del recorrido, no se tienen en cuenta STOPS
     voltaje.append(v_bat[i]*0.04)              # el valor (19.51) depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
-    corriente.append(i_bat[i]*0.02)             # el valor (0.01) depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
+    corriente.append(i_bat[i]*0.003)             # el valor (0.01) depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
     potencia.append(voltaje[i]*corriente[i])
     if i == 0:
         energybatt.append(0)
