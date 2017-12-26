@@ -1,0 +1,52 @@
+1. Para correr el software de análisis de datos abra el archivo EBIKE_main_V2.py con PyCharm o algun otro IDE configurado para Python 3.6
+	Tambien puede ejecutarlo directamente desde la consola ubicandose en la carpeta raiz y escribiendo "python EBIKE_main_V2.py" 
+	o "python3 EBIKE_main_V2.py" si tambien tiene la version 2 de python instalada. Asegurese de que python está dentro de las variables
+	de entorno del sistema para ejecutarlo desde la consola. Tambien verifique los siguientes pasos antes de ejecutarlo desde la consola.
+
+2. El archivo EBIKE_main_V2 llama varios módulos que también se encuentran en la carpeta raiz, ellos son:
+	- readfile.py
+	- operation.py
+	- powercalc.py
+	- readpowertap.py
+	- createcsv.py
+	- plot.py
+	Verifique que todos los módulos se encuentren en la carpeta, si no quiere o no necesita ejecutar un módulo, comentelo en EBIKE_main_V2
+
+3. El módulo readfile.py lee el archivo EBIKE.txt que guarda el computador de abordo en la memoria SD. El archivo debe copiarlo de la memoria
+   a la carpeta raiz del programa.
+   El modulo lee los datos del archivo y los guarda en las variables que usan los demás módulos.
+   En la linea 5 puede modificar el archivo que desea abrir, aún si está demtro de otra carpeta dentro de la carpeta raíz.
+   ej:"Autonomia\EBIKE.txt" / "Sujetos de prueba\Max Herrera\Abr 30\Abr 30.txt"
+   
+4. El módulo operations.py toma las variables de readfile.py y realiza los calculos de velocidad, cadencia, voltaje, corriente, potencia y 
+   energía de la batería. Tambien se realizan filtros para eliminar datos erroneos en la velocidad y la altitud del GPS. En este módulo puede
+   modificar tres parametros (principalmente): el diametro de la rueda  en pulgadas, y los valores de los coeficietes de corriente y voltaje
+   que dependen del computador usado. Para conocer estos valores dirigase al informe "Reporte de pruebas funcionales en computadores de a bordo"
+   Tambien es posible modificar el parametro n de los filtros de velocidad y altitud
+
+5. El módulo readpowertap.py,  al igual que el módulo  readfile.py, lee un archivo .csv y guarda los datos en unas variables para realizar
+   operaciones. En este módulo puede modificar el nombre del archivo, asegurandose de que la ruta y el nobre esten correctamente escritos.
+
+6. El módulo powercalc.py realiza los calculos de potencia y energía del ciclista a partir de los datos de velocidad y elevación, y de los datos
+   del powertap. En este módulo puede modificar el peso de la bicicleta y el peso del ciclista en kilogramos
+
+7. El módulo createcsv.py guarda todas las variables importadas y calculadas en un archivo .csv cuyo nombre será la fecha en que se ejecuta el
+   programa. El archivo se guarda en la carpeta raíz del programa.
+
+8. El módulo plot.py realiza las gráficas de variables respecto al tiempo del recorrido. Para ello, importa de cada módulo las variables que
+   necesita, y las grafica en ventanas independientes. Es posible graficar las variables respecto a la distancia o respecto al tiempo, para ello
+   debe cambiar el eje x en cada funcion plot.
+   ej: "plt.plot(seg, vel_kmh, 'b')" se grafica la velocidad respecto al tiempo (seg, es un vector de tiempo, cada pocisión es un segundo), el
+       parametro 'b' es el color de la gráfica, en este caso azul (blue).
+       
+       "plt.plot(dist_enc,cadence,'b')" se grafica la cadencia de pedaleo respecto a la distancia del recorrido (dist_enc es un vector en el 
+       que cada posición tiene la distancia acumulada en metros cada segundo del recorrido)
+
+9. Una vez verificados o modificados cada uno de los módulos según su necesidad, puede ejecutar el programa desde el IDE o desde la consola.
+
+
+
+--------------------------------------------
+Observaciones:
+- si usa datos de altitud de GPSvisualizer, agregue 3 filas en '0'(cero) al inicio del archivo "XXXX alt-data.csv"
+- si en los datos del archivo " EBIKE.txt" varias filas al inicio muestran las columnas "LAT" y "LGN" en '0'(cero) agregue al archivo "XXXX alt-data.csv" el mismo numero de filas en '0'(cero). Esto ocurre por que GPSvisualizer ignora las filas con datos en '0', y el programa (EBIKE_V2) necesita que los vectores sean del mismo tamaño para operar y graficar
