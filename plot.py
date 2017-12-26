@@ -1,4 +1,4 @@
-# plot module
+﻿# plot module
 # Junio 2017
 
 import matplotlib.pyplot as plt
@@ -8,7 +8,7 @@ from powercalc import P_prom, Pped, diffpower, Pedpower
 #from readGPSweb import GPSvis_alt
 #from EBIKE_main_V2 import date
 
-################## Potencia Batería
+################## Potencia Batería/tiempo
 plt.figure(num=1, figsize=(14, 6), dpi=100, facecolor='w', edgecolor='k')
 
 plt.subplot(2,1,1)
@@ -25,7 +25,7 @@ plt.ylabel("Potencia(W)")
 #plt.show()
 ##################
 
-################## Velocidad
+################## Velocidad/tiempo
 plt.figure(num=2, figsize=(14, 6), dpi=100, facecolor='w', edgecolor='k')
 plt.subplot(1,1,1)
 plt.plot(seg, vel_kmh, 'b')
@@ -35,7 +35,7 @@ plt.ylabel("Velocidad(km/h)")
 #plt.show()
 ##################
 
-################## Cadencia
+################## Cadencia/distancia
 plt.figure(num=3, figsize=(14, 6), dpi=100, facecolor='w', edgecolor='k')
 plt.title('Cadencia Computador vs. Powertap')
 plt.subplot(1,1,1)
@@ -50,8 +50,8 @@ plt.ylabel("Cadencia (ped/min")
 #plt.show()
 '''
 ##################
-
-################## Perfil de elevación
+'''
+################## Perfil de elevación/tiempo
 plt.figure(num=4, figsize=(14, 6), dpi=100, facecolor='w', edgecolor='k')
 plt.subplot(1,1,1)
 plt.plot(seg, altitude_nf, 'b')
@@ -61,8 +61,8 @@ plt.legend(('Altura no filtrada', 'Altura filtrada'), loc='upper left')
 plt.ylabel("Elevación(msnm)")
 #plt.show()
 ##################
-
-################## Potencia de pedaleo
+'''
+################## Potencia de pedaleo/distancia
 plt.figure(num=5, figsize=(14, 6), dpi=100, facecolor='w', edgecolor='k')
 plt.subplot(1,1,1)
 plt.plot(dist_enc, Pedpower, 'r')       # potencia calculada OBC

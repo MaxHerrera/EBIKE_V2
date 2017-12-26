@@ -7,7 +7,7 @@ altitude_nf = []
 
 import csv
 
-archivo = csv.reader(open("Autonomia\EBIKE.txt", 'r', 1))
+archivo = csv.reader(open("Autonomia\EBIKE prueba JUL 27.txt", 'r', 1))
 
 numstop = 0
 
@@ -27,8 +27,9 @@ for index, row in enumerate(archivo):
         gps_time.append(row[6])
         gps_lat.append(row[7])
         gps_lng.append(row[8])
-        gps_alt.append(row[9])
+        #gps_alt.append(row[9])
 
+'''
 for a, b in enumerate(gps_alt):
     if gps_alt[a] == 'ALT':
         altitude_nf.append(0)
@@ -45,3 +46,4 @@ for x,y in enumerate(altitude_nf):
             z = z + 1
         altitude_nf[x] = altitude_nf[z]
 ###########
+'''

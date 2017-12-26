@@ -1,4 +1,4 @@
-# Power calculation module
+﻿# Power calculation module
 # Julio 2017
 
 import math
@@ -12,10 +12,13 @@ diffpower = []; Pedpower = []; energiaped = []
 
 #####################################
 #Cálculo de potencia de pedaleo
+
 pesobicicleta = 14
 pesociclista = 70
 masatotal = pesobicicleta + pesociclista
 n = 0.975
+
+#####################################
 
 #Utilice estos PRINT para verificar que los vectores tengan el mismo tamaño (altitude = dist_enc - 1), de no ser así siga las observaciones del archivo LEEME
 #print(len(dist_enc))
@@ -29,13 +32,13 @@ for c,d in enumerate(vel_ms):
         theta = 0
     else:
         acc.append(vel_ms[c] - vel_ms[c-1])
-        if (dist_enc[c]-dist_enc[c-1]) != 0:                                     #comentar if si usa datos del modGPS
+        '''if (dist_enc[c]-dist_enc[c-1]) != 0:                                     #comentar if si usa datos del modGPS
             if (dist_enc[c]-dist_enc[c-1]) <= (altitude[c]-altitude[c-1]):
                 theta = theta
             else:
                 theta = math.asin(((altitude[c]-altitude[c-1])/(dist_enc[c]-dist_enc[c-1])))
         else:
-            theta = 0
+            theta = 0'''
     Pke.append((1/2) * (masatotal + 0.14 / (0.3 ** 2)) * (acc[c] ** 2))
     Ppe.append(vel_ms[c] * masatotal * 9.81 * math.sin(theta))
     Pbearing.append((0.091 * vel_ms[c]) + (0.0087 * (vel_ms[c] ** 2)))
@@ -53,6 +56,7 @@ for e,f in enumerate(seg):
          P_av = 0
     else:
          P_av = Pedpower[e - 1] + P_av
+
 #####################################
 P_av = P_av / max(seg)
 print('Potencia promedio calculada ' + str(P_av) + ' Watts')
@@ -63,7 +67,8 @@ for i, j in enumerate(Pped):
 
 '''
 #######
-# Potencia promedio Powertap
+# Potencia promedio Powertap #
+#######					# Si no usó el powertap en el recorrido comente esta sección del código y el import de readpowertap.py
 
 for i, j in enumerate(watts):
     if i == 0:
@@ -72,6 +77,8 @@ for i, j in enumerate(watts):
          PT_av = watts[i - 1] + PT_av
 PT_av = PT_av / max(sec)
 print('Potencia promedio PowerTap ' + str(PT_av) + ' Watts')
+
+#######
 '''
 
 #######
@@ -84,3 +91,4 @@ for i, j in enumerate(Pped):
         energiaped.append(Pped[i]+energiaped[i-1])
 
 print('Energía del ciclista ' + str(max(energiaped)) + ' Joules')
+#######

@@ -1,4 +1,4 @@
-# operations module
+﻿# operations module
 # Junio 2017
 
 voltaje = []; corriente = []; potencia = []; energybatt = []; seg = []
@@ -9,18 +9,25 @@ vel_ms_nf = []; vel_kmh_nf = []
 
 altitude = []; nofiltered = []
 
-diameter = 26
+##############################
+### Parametros de cálculos ###
+
+diameter = 26			# diametro de la rueda de la bicicleta usada en pulgadas
+coefv = 0.04			# el valor depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
+coefi = 0.003			# el valor depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
+
+##############################
 
 from readfile import *
 import math
 import numpy as np
-import readGPSweb
-from readGPSweb import GPSvis_alt
+#import readGPSweb
+#from readGPSweb import GPSvis_alt
 
 for i, x in enumerate(v_bat):
     seg.append(i)                               # el arreglo seg lleva el conteo de segundos del recorrido, no se tienen en cuenta STOPS
-    voltaje.append(v_bat[i]*0.04)              # el valor (19.51) depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
-    corriente.append(i_bat[i]*0.003)             # el valor (0.01) depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
+    voltaje.append(v_bat[i]*coefv)              
+    corriente.append(i_bat[i]*coefi)             
     potencia.append(voltaje[i]*corriente[i])
     if i == 0:
         energybatt.append(0)
@@ -38,6 +45,7 @@ for i, x in enumerate(v_bat):
     ##########
 
 ######################
+# Filtro de velocidad
 n = 100                                          # Filtro de datos de velocidad, modificar parametro n =! 1
 array = np.linspace(0, 1, n)
 
@@ -93,7 +101,7 @@ for i, x in enumerate(seg):
     # av_vel.append(vel_prom)                                   # Arreglo de velocidad promedio para gráficas
     av_cad.append(cad_prom)                                     # Arreglo de cadencia promedio para gráficas
 
-readGPSweb
+#readGPSweb
 
 selector = True                                # Selector de datos de altitud(True=EBIKE GPS data/False=GPS visualizer data)
 if selector:
