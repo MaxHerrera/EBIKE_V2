@@ -1,7 +1,7 @@
 ﻿# operations module
 # Junio 2017
 
-voltaje = []; corriente = []; potencia = []; energybatt = []; seg = []
+voltaje = []; corriente = []; potencia = []; energybatt = []; seg = []; sumpot = 0
 vel_ms = []; vel_kmh = []; vel_norm = []; cadence = []; header = []; dist_enc=[]
 av_vel = []; av_cad = []
 
@@ -14,7 +14,7 @@ altitude = []; nofiltered = []
 
 diameter = 26			# diametro de la rueda de la bicicleta usada en pulgadas
 coefv = 0.04			# el valor depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
-coefi = 0.003			# el valor depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
+coefi = 0.04			# el valor depende del computador usado, diríjase al informe "Reporte de pruebas funcionales en computadores de a bordo"
 
 ##############################
 
@@ -29,11 +29,12 @@ for i, x in enumerate(v_bat):
     voltaje.append(v_bat[i]*coefv)              
     corriente.append(i_bat[i]*coefi)             
     potencia.append(voltaje[i]*corriente[i])
+    sumpot = sumpot + potencia[i]
+    ########## Energia de la Bateria
     if i == 0:
         energybatt.append(0)
     else:
         energybatt.append(potencia[i] + energybatt[i-1])
-
     ########## Velocidad No filtrada
     if wheel_time[i] == 0:
         vel_ms_nf.append(0)
@@ -43,6 +44,11 @@ for i, x in enumerate(v_bat):
         vel_ms_nf.append((diameter * 0.0254 * math.pi) / (int(wheel_time[i]) / 1000))  # Cálculo de velocidad (m/s) de bicicleta
     vel_kmh_nf.append(vel_ms_nf[i] * 3.6)       # Cálculo de velocidad (Km/h) de bicicleta
     ##########
+
+#########
+# Potencia promedio de la bateria #
+potprom = sumpot/max(seg)
+#########
 
 ######################
 # Filtro de velocidad
@@ -92,10 +98,18 @@ for i, x in enumerate(vel_kmh):                 # #####Calculo de distancia y ca
 vel_prom = sum_vel / max(seg)                                   # Cálculo de velocidad (Km/h) promedio
 cad_prom = sum_cad / max(seg)                                   # Cálculo de cadencia (rpm) promedio
 
+###########################
+# Impresion de datos relevantes #
+
 print('Velocidad promedio ' + str(vel_prom) + ' Km/h')
 print('Cadencia de pedaleo promedio ' + str(cad_prom) + ' rpm')
 print('Distancia recorrida ' + str(max(dist_enc) / 1000) + ' Km')
+print('Potencia promedio de la batería: ' + str(potprom) + ' Watts')
 print('Energía de la batería ' + str(max(energybatt)) + ' Joules')
+print('Número de paradas: ' + str(numstop))
+print('Tiempo del recorrido: ' + str(max(seg)) + ' segundos')
+
+###########################
 
 for i, x in enumerate(seg):
     # av_vel.append(vel_prom)                                   # Arreglo de velocidad promedio para gráficas
